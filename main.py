@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #-*- coding: utf-8 -*-
 import argparse
 morse = {
@@ -49,27 +50,26 @@ def userInput():
   args = parser.parse_args()
   return args
 
-def encrypt(userInputString):
+#Encypt the ascii entries in morse languages
+def encrypt(sentence):
   result = ""
-  splitedUserInput = list(userInputString)
-  for character in splitedUserInput:
-    result += morse[character] + " " 
+  for char in list(sentence):
+    result += morse[char] + " " 
   return result 
 
-def decryptSingleWord(userInputString):
+def decryptSingleWord(word):
   result = ""
-  splitedUserInput = userInputString.split(" ")
-  for x in splitedUserInput:
-    for k,v in morse.items():  
-      if x == v:
-        result += k 
+  for char in word.split(" "):
+    for keyAscii,valMorse in morse.items():  
+      if char == valMorse:
+        result += keyAscii 
   return result.rstrip()
 
 def decrypt(sentence):
   result = ""
   words = sentence.split("   ") 
-  for w in words:
-    result += decryptSingleWord(w) + " "
+  for word in words:
+    result += decryptSingleWord(word) + " "
   return result.rstrip()  
 
 def main():
