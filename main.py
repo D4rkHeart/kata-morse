@@ -42,6 +42,7 @@ morse = {
     " ":"  ",
 }
 
+invertedDictMorse = {value:key for key, value in morse.items()}
 def userInput():
   parser = argparse.ArgumentParser()
   group = parser.add_mutually_exclusive_group(required=True)
@@ -57,14 +58,14 @@ def encrypt(sentence):
     result += morse[char] + " " 
   return result 
 
+#Decrypt the morse single word for handle sentence
 def decryptSingleWord(word):
   result = ""
   for char in word.split(" "):
-    for keyAscii,valMorse in morse.items():  
-      if char == valMorse:
-        result += keyAscii 
+    result += invertedDictMorse[char]
   return result.rstrip()
 
+#Decrypt the morse sentence 
 def decrypt(sentence):
   result = ""
   words = sentence.split("   ") 
@@ -75,7 +76,9 @@ def decrypt(sentence):
 def main():
   result = ""
   argsUsed = userInput() 
-  userInputString = input("Enter the text you want to translate: ")
+  #permet la traduction des éà
+  t = str.maketrans("àä","aa")
+  userInputString = input("Enter the text you want to translate: ").translate(t)
   if argsUsed.encode is True:
     result = encrypt(userInputString)
   else:
@@ -85,3 +88,18 @@ def main():
 # Executes the main function
 if __name__ == '__main__':
   main()
+
+# lowercase_group = parser.add_mutually_exclusive_group()
+# lowercase_group.add_argument(
+# "-l",
+# "--lowercase",
+# help="add lowercase in password",
+# dest="l",
+# action="store_true",
+# )
+# lowercase_group.add_argument(
+# "--no-lowercase",
+# help="remove lowercase from password",
+# dest="nl",
+# action="store_true",
+# ) 
